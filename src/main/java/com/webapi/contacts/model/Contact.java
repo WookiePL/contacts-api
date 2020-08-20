@@ -1,6 +1,8 @@
 package com.webapi.contacts.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "contacts")
@@ -16,6 +18,12 @@ public class Contact {
     private String address;
     private String email;
     private String phoneNumber;
+
+    @ManyToMany
+    @JoinTable(name = "skills",
+        joinColumns = {@JoinColumn( name = "contact_id")},
+        inverseJoinColumns = {@JoinColumn(name = "skill_id")})
+    private List<Skill> skills;
 
     public Contact(Long contactId, String firstname, String lastname, String address, String email, String phoneNumber) {
         this.contactId = contactId;
@@ -72,5 +80,13 @@ public class Contact {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public List<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
     }
 }
