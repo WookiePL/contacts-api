@@ -14,6 +14,9 @@ public class Skill {
     private String name;
     private String level;
 
+    public Skill() {
+    }
+
     public Skill(Long skillId, String name, String level) {
         this.skillId = skillId;
         this.name = name;

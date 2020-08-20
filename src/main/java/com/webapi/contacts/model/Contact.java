@@ -1,7 +1,6 @@
 package com.webapi.contacts.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,6 +23,9 @@ public class Contact {
         joinColumns = {@JoinColumn( name = "contact_id")},
         inverseJoinColumns = {@JoinColumn(name = "skill_id")})
     private List<Skill> skills;
+
+    public Contact() {
+    }
 
     public Contact(Long contactId, String firstname, String lastname, String address, String email, String phoneNumber) {
         this.contactId = contactId;
