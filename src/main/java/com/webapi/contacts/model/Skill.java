@@ -1,6 +1,7 @@
 package com.webapi.contacts.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "skills")
@@ -45,5 +46,20 @@ public class Skill {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Skill skill = (Skill) o;
+        return Objects.equals(skillId, skill.skillId) &&
+                Objects.equals(name, skill.name) &&
+                Objects.equals(level, skill.level);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(skillId, name, level);
     }
 }

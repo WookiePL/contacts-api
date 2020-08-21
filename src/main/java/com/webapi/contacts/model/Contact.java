@@ -2,6 +2,7 @@ package com.webapi.contacts.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "contacts")
@@ -90,5 +91,24 @@ public class Contact {
 
     public void setSkills(List<Skill> skills) {
         this.skills = skills;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contact contact = (Contact) o;
+        return Objects.equals(contactId, contact.contactId) &&
+                Objects.equals(firstname, contact.firstname) &&
+                Objects.equals(lastname, contact.lastname) &&
+                Objects.equals(address, contact.address) &&
+                Objects.equals(email, contact.email) &&
+                Objects.equals(phoneNumber, contact.phoneNumber) &&
+                Objects.equals(skills, contact.skills);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(contactId, firstname, lastname, address, email, phoneNumber, skills);
     }
 }
