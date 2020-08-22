@@ -1,8 +1,11 @@
 package com.webapi.contacts.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "contacts")
@@ -19,11 +22,11 @@ public class Contact {
     private String email;
     private String phoneNumber;
 
-    @ManyToMany
-    @JoinTable(name = "skills",
+    @ManyToMany( cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinTable(name = "contacts_skills",
         joinColumns = {@JoinColumn( name = "contact_id")},
         inverseJoinColumns = {@JoinColumn(name = "skill_id")})
-    private List<Skill> skills;
+    private List<Skill> skills = new ArrayList<>();
 
     public Contact() {
     }
@@ -95,20 +98,20 @@ public class Contact {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
         Contact contact = (Contact) o;
-        return Objects.equals(contactId, contact.contactId) &&
-                Objects.equals(firstname, contact.firstname) &&
-                Objects.equals(lastname, contact.lastname) &&
-                Objects.equals(address, contact.address) &&
-                Objects.equals(email, contact.email) &&
-                Objects.equals(phoneNumber, contact.phoneNumber) &&
-                Objects.equals(skills, contact.skills);
+
+        return EqualsBuilder.reflectionEquals(this, contact, false);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(contactId, firstname, lastname, address, email, phoneNumber, skills);
+        return HashCodeBuilder.reflectionHashCode(this, false);
     }
 }

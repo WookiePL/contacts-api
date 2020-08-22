@@ -1,7 +1,11 @@
 package com.webapi.contacts.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "skills")
@@ -15,6 +19,9 @@ public class Skill {
     private String name;
     private String level;
 
+    @ManyToMany( mappedBy = "skills")
+    List<Contact> contacts = new ArrayList<>();
+
     public Skill() {
     }
 
@@ -22,6 +29,7 @@ public class Skill {
         this.skillId = skillId;
         this.name = name;
         this.level = level;
+
     }
 
     public Long getSkillId() {
@@ -48,18 +56,30 @@ public class Skill {
         this.level = level;
     }
 
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
         Skill skill = (Skill) o;
-        return Objects.equals(skillId, skill.skillId) &&
-                Objects.equals(name, skill.name) &&
-                Objects.equals(level, skill.level);
+
+        return EqualsBuilder.reflectionEquals(this, skill, false);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(skillId, name, level);
+        return HashCodeBuilder.reflectionHashCode(this, false);
     }
 }
