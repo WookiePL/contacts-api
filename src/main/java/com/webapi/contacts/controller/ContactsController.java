@@ -1,7 +1,7 @@
 package com.webapi.contacts.controller;
 
 import com.webapi.contacts.model.Contact;
-import com.webapi.contacts.repository.ContactRepository;
+import com.webapi.contacts.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,34 +11,31 @@ import java.util.List;
 @RequestMapping("/contacts")
 public class ContactsController {
 
-    private ContactRepository contactRepository;
+    ContactService contactService;
 
     @Autowired
-    public ContactsController(ContactRepository contactRepository) {
-        this.contactRepository = contactRepository;
+    public ContactsController(ContactService contactService) {
+        this.contactService = contactService;
     }
 
     @GetMapping
-    public List<Contact> getAllContacts() {
-        List<Contact> contacts = contactRepository.findAll();
-        return contacts;
+    public List<Contact> getAll() {
+        return contactService.getAllContacts();
     }
 
     @GetMapping
     @RequestMapping("{id}")
     public Contact get(@PathVariable Long id) {
-
-        return contactRepository.getOne(id);
+        return contactService.getContactForId(id);
     }
 
     @PostMapping
     public Contact create(@RequestBody final Contact contact) {
-        return contactRepository.saveAndFlush(contact);
+        return contactService.saveContact(contact);
     }
 
     @PutMapping
     public Contact update(@RequestBody Contact contactToUpdate) {
-        Contact existingContact = contactRepository.findById(contactToUpdate.getContactId()).orElse(null);
-        return contactRepository.saveAndFlush(contactToUpdate);
+        return contactService.updateContact(contactToUpdate);
     }
 }
