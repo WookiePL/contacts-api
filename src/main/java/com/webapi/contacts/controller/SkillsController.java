@@ -2,22 +2,45 @@ package com.webapi.contacts.controller;
 
 
 import com.webapi.contacts.model.Skill;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.webapi.contacts.service.SkillService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/skills")
 public class SkillsController {
 
+    SkillService skillService;
+
+    @Autowired
+    public SkillsController(SkillService skillService) {
+        this.skillService = skillService;
+    }
+
     @GetMapping
-    public List<Skill> getAllSkills() {
-        List<Skill> skills = new ArrayList<>();
-        skills.add(new Skill(1L, "Java", "Experienced"));
-        skills.add(new Skill(2L, "Javascript", "Experienced"));
-        return skills;
+    public List<Skill> getAll() {
+        return skillService.getAllSkills();
+    }
+
+    @GetMapping(value = "{id}")
+    public Skill get(@PathVariable Long id) {
+        return skillService.getSkillForId(id);
+    }
+
+    @PostMapping
+    public Skill create(@RequestBody final Skill skill) {
+        return skillService.saveSkill(skill);
+    }
+
+    @PutMapping
+    public Skill update(@RequestBody Skill skillToUpdate) {
+        return skillService.updateSkill(skillToUpdate);
+    }
+
+    @DeleteMapping(value = "{id}")
+    public void delete(@PathVariable Long id) {
+        skillService.deleteSkillForId(id);
     }
 }

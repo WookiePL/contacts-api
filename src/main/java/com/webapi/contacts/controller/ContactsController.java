@@ -23,8 +23,7 @@ public class ContactsController {
         return contactService.getAllContacts();
     }
 
-    @GetMapping
-    @RequestMapping("{id}")
+    @GetMapping(value = "{id}")
     public Contact get(@PathVariable Long id) {
         return contactService.getContactForId(id);
     }
@@ -37,5 +36,10 @@ public class ContactsController {
     @PutMapping
     public Contact update(@RequestBody Contact contactToUpdate) {
         return contactService.updateContact(contactToUpdate);
+    }
+
+    @DeleteMapping(value = "{id}")
+    public void delete(@PathVariable Long id) {
+        contactService.deleteContactForId(id);
     }
 }

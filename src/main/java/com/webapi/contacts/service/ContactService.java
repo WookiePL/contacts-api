@@ -5,6 +5,7 @@ import com.webapi.contacts.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -34,7 +35,12 @@ public class ContactService {
     }
 
     public Contact updateContact(Contact contactToUpdate) {
-        Contact existingContact = contactRepository.findById(contactToUpdate.getContactId()).orElse(null);
+        contactRepository.findById(contactToUpdate.getContactId()).orElseThrow(EntityNotFoundException::new);
         return contactRepository.save(contactToUpdate);
+    }
+
+    public void deleteContactForId(Long id) {
+        Contact existingContact = contactRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        contactRepository.delete(existingContact);
     }
 }
