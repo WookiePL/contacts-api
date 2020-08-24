@@ -18,15 +18,12 @@ public class ContactService {
         this.contactRepository = contactRepository;
     }
 
-
     public List<Contact> getAllContacts() {
         List<Contact> contacts = contactRepository.findAll();
         return contacts;
     }
 
-
     public Contact getContactForId(Long id) {
-
         return contactRepository.getOne(id);
     }
 

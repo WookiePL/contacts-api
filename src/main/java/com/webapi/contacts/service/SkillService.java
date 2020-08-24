@@ -17,15 +17,12 @@ public class SkillService {
         this.skillRepository = skillRepository;
     }
 
-
     public List<Skill> getAllSkills() {
         List<Skill> skills = skillRepository.findAll();
         return skills;
     }
 
-
     public Skill getSkillForId(Long id) {
-
         return skillRepository.getOne(id);
     }
 
