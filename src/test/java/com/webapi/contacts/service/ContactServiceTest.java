@@ -3,17 +3,19 @@ package com.webapi.contacts.service;
 import com.webapi.contacts.ContactsApplication;
 import com.webapi.contacts.model.Contact;
 import com.webapi.contacts.model.Skill;
+import com.webapi.contacts.repository.ContactRepository;
 import com.webapi.contacts.repository.SkillRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT, classes = {ContactsApplication.class})
@@ -25,6 +27,30 @@ public class ContactServiceTest {
 
     @Autowired
     private SkillRepository skillRepository;
+
+    @Autowired
+    private ContactRepository contactRepository;
+
+    @Test
+    public void getOneContact() {
+        //given
+        Long idOfContact = 2L; //+ the initial records in db from data.sql
+        //when
+        Contact result = contactService.getContactForId(idOfContact);
+        //then
+        assertNotNull(result);
+        assertEquals(idOfContact, result.getContactId());
+
+    }
+
+    @Test
+    public void getAllContacts() {
+        //given the initial records in db from data.sql
+        //when
+        List<Contact> fetchedContacts = contactService.getAllContacts();
+        //then
+        assertEquals(2, fetchedContacts.size());
+    }
 
     @Test
     public void saveContact() {
@@ -67,6 +93,21 @@ public class ContactServiceTest {
         Contact contact = new Contact(null, "Marc", "Johnson", "Route de la Maladière 6, 1022 Chavannes-près-Renens", "marc@johnson.ch", "0585735240");
         contact.setSkills(skillList);
         return contact;
+    }
+
+
+    @Test
+    @Transactional
+    public void deleteBooking() {
+        //given
+        Long idOfContact = 2L; //+ the initial records in db from data.sql
+
+        //when
+        contactService.deleteContactForId(idOfContact);
+
+        //then
+
+        assertThrows(EntityNotFoundException.class, () -> {contactService.getContactForId(idOfContact);});
     }
 
 }
