@@ -1,5 +1,6 @@
 package com.webapi.contacts.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -19,7 +20,8 @@ public class Skill {
     private String name;
     private String level;
 
-    @ManyToMany( mappedBy = "skills")
+    @ManyToMany(mappedBy = "skills")
+    @JsonIgnore
     List<Contact> contacts = new ArrayList<>();
 
     public Skill() {

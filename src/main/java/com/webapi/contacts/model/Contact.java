@@ -2,6 +2,8 @@ package com.webapi.contacts.model;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,10 +24,11 @@ public class Contact {
     private String email;
     private String phoneNumber;
 
-    @ManyToMany( cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @Fetch(FetchMode.JOIN)
     @JoinTable(name = "contacts_skills",
-        joinColumns = {@JoinColumn( name = "contact_id")},
-        inverseJoinColumns = {@JoinColumn(name = "skill_id")})
+            joinColumns = {@JoinColumn(name = "contact_id")},
+            inverseJoinColumns = {@JoinColumn(name = "skill_id")})
     private List<Skill> skills = new ArrayList<>();
 
     public Contact() {
