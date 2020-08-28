@@ -1,6 +1,16 @@
+INSERT INTO USERS VALUES (1,  '$2a$10$ZLdqAp8AJOojOxx7H7ryhe3fYtuCrMM9RB5g6TNauApC08pkjqy0O','user1');
+INSERT INTO USERS VALUES (2,  '$2a$10$BHS5Iy1h9AKHUb4WSWOyyu2SpIil1sqTUGCkIIclqOVC6vyRyZtf6','user2');
+INSERT INTO PRIVILEGES VALUES (1, 'USER');
+INSERT INTO PRIVILEGES VALUES (2, 'ADMIN');
+
+INSERT INTO USERS_PRIVILEGES VALUES (1, 1);
+INSERT INTO USERS_PRIVILEGES VALUES (1, 2);
+INSERT INTO USERS_PRIVILEGES VALUES (2, 1);
+INSERT INTO USERS_PRIVILEGES VALUES (2, 2);
+
 --INSERT INTO CONTACTS VALUES(1, 'address', 'email', 'firstname', 'lastname', '123123123');
-INSERT INTO CONTACTS VALUES(1, 'Rue de la Mèbre 9, 1020 Renens', 'lukasz@janas.com', 'Lukasz', 'Janas', '0585736750');
-INSERT INTO CONTACTS VALUES(2, 'Route de la Maladière 6, 1022 Chavannes-près-Renens', 'marc@johnson.ch', 'Marc', 'Johnson', '0585735240');
+INSERT INTO CONTACTS VALUES(1, 'Rue de la Mèbre 9, 1020 Renens', 'lukasz@janas.com', 'Lukasz', 'Janas', '0585736750', 1);
+INSERT INTO CONTACTS VALUES(2, 'Route de la Maladière 6, 1022 Chavannes-près-Renens', 'marc@johnson.ch', 'Marc', 'Johnson', '0585735240', 1);
 
 INSERT INTO SKILLS VALUES(1, 'Advanced', 'Java');
 INSERT INTO SKILLS VALUES(2, 'Basic', 'Java');

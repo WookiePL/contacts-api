@@ -1,7 +1,9 @@
 package com.webapi.contacts.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -30,6 +32,12 @@ public class Contact {
             joinColumns = {@JoinColumn(name = "contact_id")},
             inverseJoinColumns = {@JoinColumn(name = "skill_id")})
     private List<Skill> skills = new ArrayList<>();
+
+
+    @ManyToOne//(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
 
     public Contact() {
     }
@@ -99,6 +107,14 @@ public class Contact {
         this.skills = skills;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -116,5 +132,10 @@ public class Contact {
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this, false);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }
