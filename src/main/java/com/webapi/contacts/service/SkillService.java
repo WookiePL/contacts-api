@@ -23,7 +23,7 @@ public class SkillService {
     }
 
     public Skill getSkillForId(Long id) {
-        return skillRepository.getOne(id);
+        return skillRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public Skill saveSkill(Skill skill) {

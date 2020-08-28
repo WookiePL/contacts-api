@@ -24,7 +24,7 @@ public class ContactService {
     }
 
     public Contact getContactForId(Long id) {
-        return contactRepository.getOne(id);
+        return contactRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public Contact saveContact(Contact contact) {
