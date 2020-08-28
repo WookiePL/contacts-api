@@ -1,4 +1,4 @@
-package com.webapi.contacts.service;
+package com.webapi.contacts.service.auth;
 
 
 import com.webapi.contacts.model.User;
@@ -18,8 +18,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     public CustomUserDetailsService() {
         super();
     }
-
-    // API
 
     @Override
     public UserDetails loadUserByUsername(final String username) {

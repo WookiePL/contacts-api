@@ -3,15 +3,12 @@ package com.webapi.contacts.service;
 import com.webapi.contacts.ContactsApplication;
 import com.webapi.contacts.model.Contact;
 import com.webapi.contacts.model.Skill;
-import com.webapi.contacts.repository.ContactRepository;
-import com.webapi.contacts.repository.SkillRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +21,6 @@ public class ContactServiceTest {
 
     @Autowired
     private ContactService contactService;
-
-    @Autowired
-    private SkillRepository skillRepository;
-
-    @Autowired
-    private ContactRepository contactRepository;
 
     @Test
     public void getOneContact() {
@@ -107,7 +98,7 @@ public class ContactServiceTest {
 
         //then
 
-        assertThrows(EntityNotFoundException.class, () -> {contactService.getContactForId(idOfContact);});
+        assertThrows(Exception.class, () -> {contactService.getContactForId(idOfContact);});
     }
 
 }

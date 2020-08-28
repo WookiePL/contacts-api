@@ -1,4 +1,4 @@
-package com.webapi.contacts.service;
+package com.webapi.contacts.service.auth;
 
 import com.webapi.contacts.model.User;
 import org.springframework.security.core.GrantedAuthority;
