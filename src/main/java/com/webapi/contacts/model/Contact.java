@@ -8,6 +8,8 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +23,15 @@ public class Contact {
     private Long contactId;
 
     private String firstname;
+
+    @NotEmpty(message = "Contact last name cannot be empty")
     private String lastname;
+
     private String address;
+
+    @Email(message = "Email should be valid")
     private String email;
+
     private String phoneNumber;
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})

@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,9 @@ public class Skill {
     @Column(name = "skill_id")
     private Long skillId;
 
+    @NotEmpty(message = "Skill name cannot be empty")
     private String name;
+
     private String level;
 
     @ManyToMany(mappedBy = "skills")
