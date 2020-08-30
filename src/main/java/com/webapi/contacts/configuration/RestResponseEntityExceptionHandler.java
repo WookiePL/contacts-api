@@ -1,6 +1,7 @@
 package com.webapi.contacts.configuration;
 
-import com.webapi.contacts.exception.InaccessibleContactException;
+import com.webapi.contacts.exception.UnchangableContactException;
+import com.webapi.contacts.exception.UnchangableSkillException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +22,15 @@ public class RestResponseEntityExceptionHandler
                 "Sorry, but requested entity wasn't found.", new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({ InaccessibleContactException.class })
-    public ResponseEntity<Object> handleInaccessibleContactException(Exception ex, WebRequest request) {
+    @ExceptionHandler({ UnchangableContactException.class })
+    public ResponseEntity<Object> handleUnchangableContactException(Exception ex, WebRequest request) {
         return new ResponseEntity<Object>(
                 "Sorry, but this user cannot modify this contact.", new HttpHeaders(), HttpStatus.FORBIDDEN);
+    }
+    @ExceptionHandler({ UnchangableSkillException.class })
+    public ResponseEntity<Object> handleUnchangableSkillException(Exception ex, WebRequest request) {
+        return new ResponseEntity<Object>(
+                "Sorry, but this user cannot modify this skill.", new HttpHeaders(), HttpStatus.FORBIDDEN);
     }
 
 }

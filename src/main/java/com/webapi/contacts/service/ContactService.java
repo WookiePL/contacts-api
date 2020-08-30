@@ -1,6 +1,6 @@
 package com.webapi.contacts.service;
 
-import com.webapi.contacts.exception.InaccessibleContactException;
+import com.webapi.contacts.exception.UnchangableContactException;
 import com.webapi.contacts.model.Contact;
 import com.webapi.contacts.model.User;
 import com.webapi.contacts.repository.ContactRepository;
@@ -39,22 +39,31 @@ public class ContactService {
     public Contact updateContact(Contact contactToUpdate) {
         Contact contact = contactRepository.findById(contactToUpdate.getContactId()).orElseThrow(EntityNotFoundException::new);
         User userFromContactToUpdate = contact.getUser();
+        User userFromContext = getUserFromContext();
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName = authentication.getName();
-        User userFromContext = ((CustomUserPrincipal) authentication.getPrincipal()).getUser();
-        //if (currentUserName.equals(userFromRequest.getUsername())) {
         if (userFromContext.equals(userFromContactToUpdate)) {
             return contactRepository.save(contactToUpdate);
         } else {
-            throw new InaccessibleContactException();
+            throw new UnchangableContactException();
         }
     }
 
     public void deleteContactForId(Long id) {
         Contact existingContact = contactRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        contactRepository.delete(existingContact);
+        User userFromContactToDelete = existingContact.getUser();
+        User userFromContext = getUserFromContext();
+
+        if (userFromContext.equals(userFromContactToDelete)) {
+            contactRepository.delete(existingContact);
+        } else {
+            throw new UnchangableContactException();
+        }
     }
 
+    private User getUserFromContext() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User userFromContext = ((CustomUserPrincipal) authentication.getPrincipal()).getUser();
+        return userFromContext;
+    }
 
 }
