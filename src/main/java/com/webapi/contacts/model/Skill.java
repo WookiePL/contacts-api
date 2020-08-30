@@ -25,7 +25,7 @@ public class Skill {
 
     private String level;
 
-    @ManyToMany(mappedBy = "skills")
+    @ManyToMany(mappedBy = "skills", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Contact> contacts = new ArrayList<>();
 
