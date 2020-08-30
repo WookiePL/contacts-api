@@ -37,10 +37,8 @@ public class SkillService {
 
     public Skill updateSkill(Skill skillToUpdate) {
         Skill existingSkill = skillRepository.findById(skillToUpdate.getSkillId()).orElseThrow(EntityNotFoundException::new);
-        User userFromContactToUpdate = existingSkill.getContacts().get(0).getUser();
-        User userFromContext = getUserFromContext();
 
-        if (userFromContext.equals(userFromContactToUpdate)) {
+        if (checkIfUserHasRightsToSkill(existingSkill)) {
             return skillRepository.save(skillToUpdate);
         } else {
             throw new UnchangableSkillException();
@@ -49,14 +47,19 @@ public class SkillService {
 
     public void deleteSkillForId(Long id) {
         Skill existingSkill = skillRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        User userFromContactToUpdate = existingSkill.getContacts().get(0).getUser();
-        User userFromContext = getUserFromContext();
 
-        if (userFromContext.equals(userFromContactToUpdate)) {
+        if (checkIfUserHasRightsToSkill(existingSkill)) {
             skillRepository.delete(existingSkill);
         } else {
             throw new UnchangableSkillException();
         }
+    }
+
+    private boolean checkIfUserHasRightsToSkill(Skill skill) {
+        User userFromContactToUpdate = skill.getContacts().get(0).getUser();
+        User userFromContext = getUserFromContext();
+
+        return userFromContext.equals(userFromContactToUpdate);
     }
 
     private User getUserFromContext() {

@@ -38,10 +38,8 @@ public class ContactService {
 
     public Contact updateContact(Contact contactToUpdate) {
         Contact contact = contactRepository.findById(contactToUpdate.getContactId()).orElseThrow(EntityNotFoundException::new);
-        User userFromContactToUpdate = contact.getUser();
-        User userFromContext = getUserFromContext();
 
-        if (userFromContext.equals(userFromContactToUpdate)) {
+        if (checkIfUserHasRightsToContact(contact)) {
             return contactRepository.save(contactToUpdate);
         } else {
             throw new UnchangableContactException();
@@ -50,14 +48,19 @@ public class ContactService {
 
     public void deleteContactForId(Long id) {
         Contact existingContact = contactRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        User userFromContactToDelete = existingContact.getUser();
-        User userFromContext = getUserFromContext();
 
-        if (userFromContext.equals(userFromContactToDelete)) {
+        if (checkIfUserHasRightsToContact(existingContact)) {
             contactRepository.delete(existingContact);
         } else {
             throw new UnchangableContactException();
         }
+    }
+
+    private boolean checkIfUserHasRightsToContact(Contact contact) {
+        User userFromContactToChange = contact.getUser();
+        User userFromContext = getUserFromContext();
+
+        return userFromContext.equals(userFromContactToChange);
     }
 
     private User getUserFromContext() {
