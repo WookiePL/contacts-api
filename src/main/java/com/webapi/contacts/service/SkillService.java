@@ -1,27 +1,23 @@
 package com.webapi.contacts.service;
 
 import com.webapi.contacts.exception.UnchangableSkillException;
-import com.webapi.contacts.model.Contact;
 import com.webapi.contacts.model.Skill;
-import com.webapi.contacts.model.User;
 import com.webapi.contacts.repository.SkillRepository;
-import com.webapi.contacts.service.auth.CustomUserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class SkillService {
     private final SkillRepository skillRepository;
+    private final UserCheck userCheck;
 
     @Autowired
-    public SkillService(SkillRepository skillRepository) {
+    public SkillService(SkillRepository skillRepository, UserCheck userCheck) {
         this.skillRepository = skillRepository;
+        this.userCheck = userCheck;
     }
 
     public List<Skill> getAllSkills() {
@@ -40,7 +36,7 @@ public class SkillService {
     public Skill updateSkill(Skill skillToUpdate) {
         Skill existingSkill = skillRepository.findById(skillToUpdate.getSkillId()).orElseThrow(EntityNotFoundException::new);
 
-        if (checkIfUserHasRightsToSkill(existingSkill)) {
+        if (userCheck.checkIfUserHasRightsToSkill(existingSkill)) {
             return skillRepository.save(skillToUpdate);
         } else {
             throw new UnchangableSkillException();
@@ -50,22 +46,10 @@ public class SkillService {
     public void deleteSkillForId(Long id) {
         Skill existingSkill = skillRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
-        if (checkIfUserHasRightsToSkill(existingSkill)) {
+        if (userCheck.checkIfUserHasRightsToSkill(existingSkill)) {
             skillRepository.delete(existingSkill);
         } else {
             throw new UnchangableSkillException();
         }
-    }
-
-    private boolean checkIfUserHasRightsToSkill(Skill skill) {
-        List<User> usersFromContactToUpdate = skill.getContacts().stream().map(Contact::getUser).collect(Collectors.toList());
-        User userFromContext = getUserFromContext();
-
-        return usersFromContactToUpdate.contains(userFromContext);
-    }
-
-    private User getUserFromContext() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return ((CustomUserPrincipal) authentication.getPrincipal()).getUser();
     }
 }

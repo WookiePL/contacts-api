@@ -77,20 +77,25 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
 
         User user = (User) o;
 
-        return EqualsBuilder.reflectionEquals(this, user, false);
+        return new EqualsBuilder()
+                .append(userId, user.userId)
+                .append(username, user.username)
+                .append(password, user.password)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this, false);
+        return new HashCodeBuilder(17, 37)
+                .append(userId)
+                .append(username)
+                .append(password)
+                .toHashCode();
     }
 }
