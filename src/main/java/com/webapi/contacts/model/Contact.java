@@ -10,8 +10,8 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "contacts")
@@ -39,7 +39,7 @@ public class Contact {
     @JoinTable(name = "contacts_skills",
             joinColumns = {@JoinColumn(name = "contact_id")},
             inverseJoinColumns = {@JoinColumn(name = "skill_id")})
-    private List<Skill> skills = new ArrayList<>();
+    private Set<Skill> skills = new HashSet<>();
 
 
     @ManyToOne//(fetch = FetchType.EAGER)
@@ -107,11 +107,11 @@ public class Contact {
         this.phoneNumber = phoneNumber;
     }
 
-    public List<Skill> getSkills() {
+    public Set<Skill> getSkills() {
         return skills;
     }
 
-    public void setSkills(List<Skill> skills) {
+    public void setSkills(Set<Skill> skills) {
         this.skills = skills;
     }
 

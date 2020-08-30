@@ -9,8 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -78,7 +79,7 @@ public class ContactServiceTest {
     private Contact getValidContact() {
         Skill skill1 = new Skill(null, "Java", "Advanced");
        // Skill skill2 = new Skill(null, "Angular", "Advanced");
-        List<Skill> skillList = new ArrayList<>();
+        Set<Skill> skillList = new HashSet<>();
         skillList.add(skill1);
        // skillList.add(skill2);
         Contact contact = new Contact(null, "Marc", "Johnson", "Route de la Maladière 6, 1022 Chavannes-près-Renens", "marc@johnson.ch", "0585735240");
