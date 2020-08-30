@@ -1,8 +1,11 @@
 package com.webapi.contacts.controller;
 
 import com.webapi.contacts.model.Contact;
+import com.webapi.contacts.model.User;
 import com.webapi.contacts.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,8 +37,16 @@ public class ContactsController {
     }
 
     @PutMapping
-    public Contact update(@RequestBody Contact contactToUpdate) {
-        return contactService.updateContact(contactToUpdate);
+    public Contact update(@RequestBody Contact contactToUpdate) throws Exception {
+        User user = contactService.getContactForId(contactToUpdate.getContactId()).getUser();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        if (currentUserName.equals(user.getUsername())) {
+            return contactService.updateContact(contactToUpdate);
+        } else {
+            throw new Exception();
+        }
     }
 
     @DeleteMapping(value = "{id}")
