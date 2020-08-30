@@ -1,5 +1,8 @@
 package com.webapi.contacts.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.persistence.*;
 
 @Entity
@@ -41,49 +44,24 @@ public class Privilege {
         this.name = name;
     }
 
-//    @Override
-//    public String toString() {
-//        final StringBuilder builder = new StringBuilder();
-//        builder.append("Privilege [id=").append(id).append(", name=").append(name).append("]");
-//        return builder.toString();
-//    }
-
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = (prime * result) + ((id == null) ? 0 : id.hashCode());
-        result = (prime * result) + ((name == null) ? 0 : name.hashCode());
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Privilege privilege = (Privilege) o;
+
+        return EqualsBuilder.reflectionEquals(this, privilege, false);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Privilege other = (Privilege) obj;
-        if (id == null) {
-            if (other.id != null) {
-                return false;
-            }
-        } else if (!id.equals(other.id)) {
-            return false;
-        }
-        if (name == null) {
-            if (other.name != null) {
-                return false;
-            }
-        } else if (!name.equals(other.name)) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this, false);
+    }
     }
 
 }
