@@ -62,6 +62,4 @@ public class Privilege {
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this, false);
     }
-    }
-
 }
