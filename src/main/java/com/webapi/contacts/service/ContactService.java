@@ -1,8 +1,13 @@
 package com.webapi.contacts.service;
 
+import com.webapi.contacts.exception.InaccessibleContactException;
 import com.webapi.contacts.model.Contact;
+import com.webapi.contacts.model.User;
 import com.webapi.contacts.repository.ContactRepository;
+import com.webapi.contacts.service.auth.CustomUserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -32,12 +37,24 @@ public class ContactService {
     }
 
     public Contact updateContact(Contact contactToUpdate) {
-        contactRepository.findById(contactToUpdate.getContactId()).orElseThrow(EntityNotFoundException::new);
-        return contactRepository.save(contactToUpdate);
+        Contact contact = contactRepository.findById(contactToUpdate.getContactId()).orElseThrow(EntityNotFoundException::new);
+        User userFromContactToUpdate = contact.getUser();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        User userFromContext = ((CustomUserPrincipal) authentication.getPrincipal()).getUser();
+        //if (currentUserName.equals(userFromRequest.getUsername())) {
+        if (userFromContext.equals(userFromContactToUpdate)) {
+            return contactRepository.save(contactToUpdate);
+        } else {
+            throw new InaccessibleContactException();
+        }
     }
 
     public void deleteContactForId(Long id) {
         Contact existingContact = contactRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         contactRepository.delete(existingContact);
     }
+
+
 }

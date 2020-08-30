@@ -23,7 +23,7 @@ public class User {
     @JsonIgnore
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Contact> contacts;
 
