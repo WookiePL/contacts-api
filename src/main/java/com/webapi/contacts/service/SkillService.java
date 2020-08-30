@@ -1,6 +1,7 @@
 package com.webapi.contacts.service;
 
 import com.webapi.contacts.exception.UnchangableSkillException;
+import com.webapi.contacts.model.Contact;
 import com.webapi.contacts.model.Skill;
 import com.webapi.contacts.model.User;
 import com.webapi.contacts.repository.SkillRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SkillService {
@@ -56,10 +58,10 @@ public class SkillService {
     }
 
     private boolean checkIfUserHasRightsToSkill(Skill skill) {
-        User userFromContactToUpdate = skill.getContacts().get(0).getUser();
+        List<User> usersFromContactToUpdate = skill.getContacts().stream().map(Contact::getUser).collect(Collectors.toList());
         User userFromContext = getUserFromContext();
 
-        return userFromContext.equals(userFromContactToUpdate);
+        return usersFromContactToUpdate.contains(userFromContext);
     }
 
     private User getUserFromContext() {
