@@ -33,11 +33,9 @@ public class ContactsController {
         return contactService.saveContact(contact);
     }
 
-
     @PutMapping
     public Contact update(@RequestBody Contact contactToUpdate) throws Exception {
         return contactService.updateContact(contactToUpdate);
-
     }
 
     @DeleteMapping(value = "{id}")
