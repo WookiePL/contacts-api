@@ -1,6 +1,6 @@
 package com.webapi.contacts;
 
-import com.webapi.contacts.service.BaseTest;
+import com.webapi.contacts.service.ContactServiceTest;
 import io.restassured.RestAssured;
 import io.restassured.authentication.FormAuthConfig;
 import io.restassured.response.Response;
@@ -31,7 +31,7 @@ public class ApplicationLiveTest {
 
     @Test
     public void givenLoggedUserAndValidContact_whenGetAllContacts_thenOK() {
-        final Response response = givenAuth("user1", "pass1").contentType(MediaType.APPLICATION_JSON_VALUE).body(BaseTest.getValidContact()).post("http://localhost:8080/contacts");
+        final Response response = givenAuth("user1", "pass1").contentType(MediaType.APPLICATION_JSON_VALUE).body(ContactServiceTest.getValidContact()).post("http://localhost:8080/contacts");
         assertEquals(200, response.getStatusCode());
     }
 

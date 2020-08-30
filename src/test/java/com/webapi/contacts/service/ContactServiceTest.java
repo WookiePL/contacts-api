@@ -79,7 +79,7 @@ public class ContactServiceTest {
         assertEquals("0585735240", result.getPhoneNumber());
     }
 
-    private Contact getValidContact() {
+    public static Contact getValidContact() {
         Skill skill1 = new Skill(null, "Java", "Advanced");
        // Skill skill2 = new Skill(null, "Angular", "Advanced");
         Set<Skill> skillList = new HashSet<>();
