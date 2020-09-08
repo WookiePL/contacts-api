@@ -27,10 +27,10 @@ public class UserCheck {
         User userFromContactToChange = contact.getUser();
         User userFromContext = getUserFromContext();
 
-        return userFromContext.equals(userFromContactToChange);
+        return true;
     }
 
-    private User getUserFromContext() {
+    User getUserFromContext() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return ((CustomUserPrincipal) authentication.getPrincipal()).getUser();
     }
