@@ -1,6 +1,6 @@
 package com.webapi.contacts.service;
 
-import com.webapi.contacts.exception.UnchangableSkillException;
+import com.webapi.contacts.exception.UnchangeableSkillException;
 import com.webapi.contacts.model.Skill;
 import com.webapi.contacts.repository.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class SkillService {
         if (userCheck.checkIfUserHasRightsToSkill(existingSkill)) {
             return skillRepository.save(skillToUpdate);
         } else {
-            throw new UnchangableSkillException();
+            throw new UnchangeableSkillException();
         }
     }
 
@@ -48,7 +48,7 @@ public class SkillService {
         if (userCheck.checkIfUserHasRightsToSkill(existingSkill)) {
             skillRepository.delete(existingSkill);
         } else {
-            throw new UnchangableSkillException();
+            throw new UnchangeableSkillException();
         }
     }
 }

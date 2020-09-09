@@ -1,6 +1,6 @@
 package com.webapi.contacts.service;
 
-import com.webapi.contacts.exception.UnchangableContactException;
+import com.webapi.contacts.exception.UnchangeableContactException;
 import com.webapi.contacts.model.Contact;
 import com.webapi.contacts.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class ContactService {
         if (userCheck.checkIfUserHasRightsToContact(contact)) {
             return contactRepository.save(contactToUpdate);
         } else {
-            throw new UnchangableContactException();
+            throw new UnchangeableContactException();
         }
     }
 
@@ -49,7 +49,7 @@ public class ContactService {
         if (userCheck.checkIfUserHasRightsToContact(existingContact)) {
             contactRepository.delete(existingContact);
         } else {
-            throw new UnchangableContactException();
+            throw new UnchangeableContactException();
         }
     }
 }
