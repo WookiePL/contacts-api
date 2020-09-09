@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/contacts")
 public class ContactsController {
 
-    ContactService contactService;
+    final ContactService contactService;
 
     @Autowired
     public ContactsController(ContactService contactService) {
@@ -36,7 +36,7 @@ public class ContactsController {
     }
 
     @PutMapping
-    public Contact update(@RequestBody Contact contactToUpdate) throws Exception {
+    public Contact update(@RequestBody Contact contactToUpdate) {
         return contactService.updateContact(contactToUpdate);
     }
 

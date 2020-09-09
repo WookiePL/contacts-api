@@ -18,18 +18,18 @@ public class RestResponseEntityExceptionHandler
 
     @ExceptionHandler({ EntityNotFoundException.class })
     public ResponseEntity<Object> handleEntityNotFoundException(Exception ex, WebRequest request) {
-        return new ResponseEntity<Object>(
+        return new ResponseEntity<>(
                 "Sorry, but requested entity wasn't found.", new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({ UnchangableContactException.class })
     public ResponseEntity<Object> handleUnchangableContactException(Exception ex, WebRequest request) {
-        return new ResponseEntity<Object>(
+        return new ResponseEntity<>(
                 "Sorry, but this user cannot modify this contact.", new HttpHeaders(), HttpStatus.FORBIDDEN);
     }
     @ExceptionHandler({ UnchangableSkillException.class })
     public ResponseEntity<Object> handleUnchangableSkillException(Exception ex, WebRequest request) {
-        return new ResponseEntity<Object>(
+        return new ResponseEntity<>(
                 "Sorry, but this user cannot modify this skill.", new HttpHeaders(), HttpStatus.FORBIDDEN);
     }
 

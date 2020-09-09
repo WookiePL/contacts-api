@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/skills")
 public class SkillsController {
 
-    SkillService skillService;
+    final SkillService skillService;
 
     @Autowired
     public SkillsController(SkillService skillService) {

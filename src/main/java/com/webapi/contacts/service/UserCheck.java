@@ -27,7 +27,7 @@ public class UserCheck {
         User userFromContactToChange = contact.getUser();
         User userFromContext = getUserFromContext();
 
-        return true;
+        return userFromContext.equals(userFromContactToChange);
     }
 
     User getUserFromContext() {

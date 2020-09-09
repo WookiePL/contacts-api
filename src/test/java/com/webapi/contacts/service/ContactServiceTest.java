@@ -65,7 +65,8 @@ public class ContactServiceTest {
     @Disabled
     public void updateContact() {
         //given
-        Contact contactToUpdate = contactService.saveContact(getValidContact());
+        Contact contactToUpdate = contactService.getContactForId(2L);
+
         //contactToUpdate.setContactId(2L);
         Long idBeforeUpdate = contactToUpdate.getContactId();
         //when
@@ -93,7 +94,7 @@ public class ContactServiceTest {
 
     @Test
     @Disabled
-    public void deleteBooking() {
+    public void deleteContact() {
         //given
         Long idOfContact = 2L; //+ the initial records in db from data.sql
 
@@ -102,7 +103,7 @@ public class ContactServiceTest {
 
         //then
 
-        assertThrows(Exception.class, () -> {contactService.getContactForId(idOfContact);});
+        assertThrows(Exception.class, () -> contactService.getContactForId(idOfContact));
     }
 
 }

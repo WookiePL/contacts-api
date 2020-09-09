@@ -51,9 +51,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring()
-//                .antMatchers("/resources/**");
+    public void configure(WebSecurity web) {
 
         web.ignoring().antMatchers("/v2/api-docs",
                 "/configuration/ui",
@@ -86,23 +84,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
-//                .cors().and()
-//                .csrf().disable()
-//                .authorizeRequests()
-//                .anyRequest().permitAll()
-//                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-//                .authorizeRequests()
-//                .antMatchers("/").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll()
-//                .and().csrf().disable()
-//                .httpBasic();
                 .csrf().disable().cors().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()

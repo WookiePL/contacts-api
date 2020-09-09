@@ -21,8 +21,7 @@ public class SkillService {
     }
 
     public List<Skill> getAllSkills() {
-        List<Skill> skills = skillRepository.findAll();
-        return skills;
+        return skillRepository.findAll();
     }
 
     public Skill getSkillForId(Long id) {
