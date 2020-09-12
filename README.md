@@ -2,6 +2,8 @@
 Simple REST API written in Java with SpringBoot to manage contacts. Every contact can have skills assigned.
 This app was written mainly to demonstrate and exercise.
 
+There is also the frontend for this app: [github.com/WookiePL/contacts-frontend](https://github.com/WookiePL/contacts-frontend)
+
 ##Build & run
 Build the app:
 `mvnw spring-boot:build-image`.
