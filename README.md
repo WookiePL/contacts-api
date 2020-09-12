@@ -1,10 +1,10 @@
-#Contacts API
+# Contacts API
 Simple REST API written in Java with SpringBoot to manage contacts. Every contact can have skills assigned.
 This app was written mainly to demonstrate and exercise.
 
 There is also the frontend for this app: [github.com/WookiePL/contacts-frontend](https://github.com/WookiePL/contacts-frontend)
 
-##Build & run
+## Build & run
 Build the app:
 `mvnw spring-boot:build-image`.
 
@@ -13,7 +13,7 @@ Run the image:
 
 Access documentation: 
 open `http://localhost:8080/swagger-ui.html`.
-##Technologies used
+## Technologies used
 - Java 11
 - Spring Boot 2
 - Spring Security
